@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#003366" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="TSC Form D" />
+  <meta name="description" content="Teachers Service Commission Entry and Exit Report (Form D / Schedule XV)" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
+  <title>TSC Entry & Exit Report | Form D</title>
+  <style>
+    :root {
+      --tsc-blue: #003366;
+      --tsc-gold: #c9a227;
+      --border: #c5c5c5;
+      --bg: #f4f6f9;
+      --card: #ffffff;
+      --danger: #c0392b;
+      --success: #1e7e34;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: #222;
+      line-height: 1.45;
+      padding: 16px;
+      padding-bottom: 40px;
+    }
+
+    .app {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .official-header {
+      background: var(--card);
+      border: 2px solid var(--tsc-blue);
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .form-meta {
+      font-size: 13px;
+      color: #444;
+    }
+
+    .form-meta strong { color: var(--tsc-blue); }
+
+    .tsc-logo-area {
+      text-align: center;
+      flex: 1;
+      min-width: 160px;
+    }
+
+    .tsc-logo-area img {
+      max-width: 140px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .tsc-logo-area h1 {
+      font-size: 15px;
+      color: var(--tsc-blue);
+      letter-spacing: 0.5px;
+      margin-top: 6px;
+      margin-bottom: 2px;
+    }
+
+    .tsc-logo-area .subtitle {
+      font-size: 11px;
+      color: #666;
+      font-style: italic;
+    }
+
+    .address-block {
+      font-size: 12px;
+      text-align: right;
+      color: #333;
+      line-height: 1.5;
+    }
+
+    .contact-block {
+      font-size: 12px;
+      margin-top: 12px;
+      color: #444;
+    }
+
+    .form-title {
+      text-align: center;
+      margin: 18px 0 8px;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--tsc-blue);
+      text-decoration: underline;
+      letter-spacing: 1px;
+    }
+
+    .ref-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      margin-top: 10px;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px 22px;
+      margin-bottom: 18px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+
+    .card h2 {
+      font-size: 15px;
+      color: var(--tsc-blue);
+      border-bottom: 2px solid var(--tsc-gold);
+      padding-bottom: 6px;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .notes-list {
+      font-size: 13px;
+      padding-left: 18px;
+      color: #333;
+    }
+
+    .notes-list li { margin-bottom: 6px; }
+
+    .dist-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0;
+      font-size: 13px;
+    }
+
+    .dist-table th, .dist-table td {
+      border: 1px solid #999;
+      padding: 6px 10px;
+      text-align: left;
+    }
+
+    .dist-table th { background: #eef2f7; }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    @media (min-width: 640px) {
+      .form-grid.two-col {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .field label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .field label .req { color: var(--danger); }
+
+    .field input,
+    .field select,
+    .field textarea {
+      padding: 9px 11px;
+      border: 1px solid #bbb;
+      border-radius: 5px;
+      font-size: 14px;
+      font-family: inherit;
+      transition: border-color 0.15s;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      outline: none;
+      border-color: var(--tsc-blue);
+      box-shadow: 0 0 0 2px rgba(0,51,102,0.15);
+    }
+
+    .field textarea { resize: vertical; min-height: 60px; }
+
+    .hint {
+      font-size: 11px;
+      color: #777;
+      margin-top: 2px;
+    }
+
+    .mode-switch {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .mode-btn {
+      flex: 1;
+      min-width: 140px;
+      padding: 12px 16px;
+      border: 2px solid var(--tsc-blue);
+      background: white;
+      color: var(--tsc-blue);
+      font-weight: 600;
+      font-size: 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .mode-btn.active {
+      background: var(--tsc-blue);
+      color: white;
+    }
+
+    .mode-btn:hover:not(.active) {
+      background: #e8eef5;
+    }
+
+    .sig-container {
+      margin-top: 8px;
+    }
+
+    .sig-pad-wrap {
+      border: 2px solid #999;
+      border-radius: 6px;
+      background: #fff;
+      position: relative;
+      touch-action: none;
+      overflow: hidden;
+    }
+
+    #signatureCanvas {
+      display: block;
+      width: 100%;
+      height: 160px;
+      cursor: crosshair;
+    }
+
+    .sig-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+
+    .sig-actions button {
+      padding: 7px 14px;
+      font-size: 13px;
+      border-radius: 5px;
+      border: 1px solid #bbb;
+      background: #f0f0f0;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .sig-actions button:hover { background: #e0e0e0; }
+
+    .sig-status {
+      font-size: 12px;
+      color: #666;
+      margin-top: 4px;
+    }
+
+    .sig-status.signed { color: var(--success); font-weight: 600; }
+
+    .stamp-box {
+      border: 2px dashed #aaa;
+      height: 90px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      font-size: 13px;
+      background: #fafafa;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      padding: 11px 20px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+
+    .btn:hover { opacity: 0.9; }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .btn-primary {
+      background: var(--tsc-blue);
+      color: white;
+    }
+
+    .btn-secondary {
+      background: #e9ecef;
+      color: #333;
+      border: 1px solid #bbb;
+    }
+
+    .btn-success {
+      background: var(--success);
+      color: white;
+    }
+
+    .btn-danger {
+      background: var(--danger);
+      color: white;
+    }
+
+    .btn-install {
+      background: var(--tsc-gold);
+      color: #222;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #222;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 14px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+      z-index: 100;
+      max-width: 90%;
+      text-align: center;
+    }
+
+    .toast.show { opacity: 1; }
+
+    .install-banner {
+      background: linear-gradient(135deg, var(--tsc-blue), #004080);
+      color: white;
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .install-banner.show { display: flex; }
+
+    .install-banner p { font-size: 14px; margin: 0; }
+
+    @media print {
+      body { background: white; padding: 0; }
+      .mode-switch, .actions, .toast, .install-banner, .sig-actions { display: none !important; }
+      .card { box-shadow: none; border: 1px solid #999; break-inside: avoid; }
+      .official-header { border-width: 1px; }
+      input, select, textarea {
+        border: none !important;
+        border-bottom: 1px solid #333 !important;
+        border-radius: 0 !important;
+        padding: 2px 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+      }
+      .stamp-box { border-style: solid; }
+      #signatureCanvas { border: 1px solid #333; }
+    }
+
+    .hidden { display: none !important; }
+
+    .institution-header {
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid #ddd;
+    }
+
+    .institution-header label {
+      font-size: 12px;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .institution-header input {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid #bbb;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+
+    /* Live Sync UI */
+    .sync-bar {
+      background: #eef4fb;
+      border: 1px solid #b8d0e8;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-bottom: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+    .sync-bar label { font-size: 12px; font-weight: 600; color: #003366; }
+    .sync-bar input[type="text"] {
+      padding: 7px 10px;
+      border: 1px solid #99b;
+      border-radius: 5px;
+      font-size: 14px;
+      width: 140px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .sync-status {
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 12px;
+      background: #ddd;
+      color: #444;
+    }
+    .sync-status.connected { background: #d4edda; color: #155724; }
+    .sync-status.syncing { background: #fff3cd; color: #856404; }
+    .sync-status.error { background: #f8d7da; color: #721c24; }
+    .sync-hint { font-size: 11px; color: #666; width: 100%; margin-top: 2px; }
+
+  </style>
+
+  <!-- Firebase (Realtime Database for live sync) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
+</head>
+<body>
+  <div class="app">
+    <div class="install-banner" id="installBanner">
+      <p>Install this app for offline use &amp; quick access</p>
+      <button class="btn btn-install" id="installBtn">Install App</button>
+    </div>
+
+    <!-- Live Sync Bar (Firebase) -->
+    <div class="sync-bar" id="syncBar">
+      <label>Live Sync Code</label>
+      <input type="text" id="syncCode" placeholder="e.g. NRB42A" maxlength="12" />
+      <button class="btn btn-primary" style="padding:7px 14px;font-size:13px;" onclick="connectSync()">Connect</button>
+      <button class="btn btn-secondary" style="padding:7px 14px;font-size:13px;" onclick="generateSyncCode()">New Code</button>
+      <button class="btn btn-danger" style="padding:7px 14px;font-size:13px;display:none;" id="disconnectBtn" onclick="disconnectSync()">Disconnect</button>
+      <span class="sync-status" id="syncStatus">Offline</span>
+      <button class="btn btn-secondary" style="padding:7px 14px;font-size:13px;" onclick="toggleFirebaseSetup()">⚙ Firebase Setup</button>
+      <div class="sync-hint">Share the same code on all devices. Requires Firebase (free). Click “Firebase Setup” once to connect your project.</div>
+    </div>
+
+    <div class="card" id="firebaseSetup" style="display:none; border-color:#003366;">
+      <h2>Firebase Setup (one-time)</h2>
+      <p style="font-size:13px;margin-bottom:12px;color:#444;">
+        Create a free project at <a href="https://console.firebase.google.com" target="_blank" rel="noopener">console.firebase.google.com</a>,
+        enable <strong>Realtime Database</strong> (start in test mode), then paste your web config below.
+      </p>
+      <div class="field">
+        <label>Firebase Config (JSON)</label>
+        <textarea id="firebaseConfigInput" rows="8" placeholder='{
+  "apiKey": "AIza...",
+  "authDomain": "your-project.firebaseapp.com",
+  "databaseURL": "https://your-project-default-rtdb.firebaseio.com",
+  "projectId": "your-project",
+  "storageBucket": "your-project.appspot.com",
+  "messagingSenderId": "123456789",
+  "appId": "1:123456789:web:abc..."
+}'></textarea>
+      </div>
+      <div class="actions" style="margin-top:10px;">
+        <button class="btn btn-success" onclick="saveFirebaseConfig()">Save & Enable Firebase</button>
+        <button class="btn btn-secondary" onclick="toggleFirebaseSetup()">Close</button>
+      </div>
+      <p id="firebaseSetupStatus" style="font-size:12px;margin-top:8px;color:#666;"></p>
+    </div>
+
+
+    <div class="official-header">
+      <div class="header-top">
+        <div class="form-meta">
+          <div><strong>Form D</strong></div>
+          <div>SCHEDULE XV</div>
+          <div>(R.57 (1), (64) (5)</div>
+          <div style="margin-top:6px">NO. <span id="formNo">A137414</span></div>
+        </div>
+
+        <div class="tsc-logo-area">
+          <img src="tsc-logo.png" alt="Teachers Service Commission Kenya" />
+          <h1>TEACHERS SERVICE COMMISSION</h1>
+          <div class="subtitle">Effective Service for Quality Teaching</div>
+        </div>
+
+        <div class="address-block">
+          THE TSC HOUSE<br>
+          KILIMANJARO ROAD<br>
+          UPPER HILL<br>
+          PRIVATE BAG-00100<br>
+          NAIROBI, KENYA
+        </div>
+      </div>
+
+      <div class="contact-block">
+        <strong>Telephone:</strong> +254-020-2892000 / 0722-208-552 &nbsp;|&nbsp;
+        <strong>Email:</strong> info@tsc.go.ke &nbsp;|&nbsp;
+        <strong>Website:</strong> http://www.tsc.go.ke
+      </div>
+
+      <div class="ref-row">
+        <div>
+          <strong>Ref. Nº:</strong> TSC/
+          <input type="text" id="refNo" placeholder="Enter Ref No" style="width:140px;display:inline-block;padding:4px 8px;border:1px solid #bbb;border-radius:4px;font-size:13px;" />
+        </div>
+        <div>
+          <strong>Date:</strong>
+          <input type="date" id="reportDate" style="padding:4px 8px;border:1px solid #bbb;border-radius:4px;font-size:13px;" />
+        </div>
+      </div>
+
+      <div class="institution-header">
+        <label>NAME OF INSTITUTION AND ADDRESS</label>
+        <input type="text" id="institutionHeader" placeholder="School / Institution name and full address" />
+      </div>
+
+      <div class="form-title">ENTRY AND EXIT REPORT</div>
+    </div>
+
+    <div class="mode-switch">
+      <button class="mode-btn active" id="btnEntry" onclick="setMode('entry')">ENTRY REPORT</button>
+      <button class="mode-btn" id="btnExit" onclick="setMode('exit')">EXIT / STOPPAGE REPORT</button>
+      <button class="mode-btn" id="btnBoth" onclick="setMode('both')">BOTH (Entry + Exit)</button>
+    </div>
+
+    <div class="card">
+      <h2>PART A – Notes</h2>
+      <ol class="notes-list">
+        <li>This report shall be completed <strong>IMMEDIATELY</strong> a teacher <strong>STARTS</strong> or <strong>STOPS</strong> teaching.</li>
+        <li>Upon completion, it should be <strong>URGENTLY</strong> distributed as follows:</li>
+      </ol>
+      <table class="dist-table">
+        <thead>
+          <tr>
+            <th>Copy</th>
+            <th>Destination</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>ORIGINAL</strong></td><td>To the TSC Headquarters</td></tr>
+          <tr><td><strong>DUPLICATE</strong></td><td>To the TSC County Director</td></tr>
+          <tr><td><strong>TRIPLICATE</strong></td><td>To be retained in school file</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:13px;margin-top:8px;">
+        3. This form is an accountable document which should only be completed by either the Head of Institution or in his absence the Deputy Head of Institution.
+      </p>
+    </div>
+
+    <div class="card" id="entrySection">
+      <h2>PART B – ENTRY REPORT</h2>
+      <div class="form-grid">
+        <div class="field">
+          <label>1. NAME <span class="req">*</span></label>
+          <input type="text" id="entryName" placeholder="Full name of teacher" required />
+        </div>
+        <div class="form-grid two-col">
+          <div class="field">
+            <label>2. TSC NO. <span class="req">*</span></label>
+            <input type="text" id="entryTscNo" placeholder="e.g. 123456" required />
+          </div>
+          <div class="field">
+            <label>3. GRADE <span class="req">*</span></label>
+            <input type="text" id="entryGrade" placeholder="e.g. P1, ATS IV, GR. II, GR. III" required />
+          </div>
+        </div>
+        <div class="field">
+          <label>4. QUALIFICATIONS</label>
+          <input type="text" id="entryQual" placeholder="e.g. P1, DIP, B.ED" />
+        </div>
+        <div class="field">
+          <label>5. TEACHING SUBJECTS</label>
+          <input type="text" id="entrySubjects" placeholder="Subjects taught" />
+        </div>
+        <div class="field">
+          <label>6. NAME OF INSTITUTION <span class="req">*</span></label>
+          <input type="text" id="entryInstitution" placeholder="Name of school / institution" required />
+        </div>
+        <div class="form-grid two-col">
+          <div class="field">
+            <label>7. STATION CODE OF THE INSTITUTION</label>
+            <input type="text" id="entryStationCode" placeholder="Station code" />
+          </div>
+          <div class="field">
+            <label>8. DATE STARTED TEACHING <span class="req">*</span></label>
+            <input type="date" id="entryDateStarted" required />
+          </div>
+        </div>
+        <div class="field">
+          <label>9. TYPE OF ENTRY <span class="req">*</span></label>
+          <select id="entryType" required>
+            <option value="">-- Select type of entry --</option>
+            <option value="New Appointment">New Appointment</option>
+            <option value="Reinstatement">Reinstatement</option>
+            <option value="on Transfer">on Transfer</option>
+          </select>
+          <div class="hint">If “on Transfer”, give details of previous Institution below</div>
+        </div>
+        <div class="field" id="entryTransferDetailsWrap">
+          <label>Previous Institution Details (if on Transfer)</label>
+          <textarea id="entryTransferDetails" placeholder="Name and address of previous institution"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="card hidden" id="exitSection">
+      <h2>PART C – EXIT / STOPPAGE REPORT</h2>
+      <div class="form-grid">
+        <div class="field">
+          <label>1. NAME <span class="req">*</span></label>
+          <input type="text" id="exitName" placeholder="Full name of teacher" />
+        </div>
+        <div class="form-grid two-col">
+          <div class="field">
+            <label>2. TSC NO. <span class="req">*</span></label>
+            <input type="text" id="exitTscNo" placeholder="e.g. 123456" />
+          </div>
+          <div class="field">
+            <label>3. GRADE</label>
+            <input type="text" id="exitGrade" placeholder="e.g. P1, ATS IV, GR. II" />
+          </div>
+        </div>
+        <div class="field">
+          <label>4. QUALIFICATIONS</label>
+          <input type="text" id="exitQual" placeholder="e.g. P1, DIP, B.ED" />
+        </div>
+        <div class="field">
+          <label>5. TEACHING SUBJECTS</label>
+          <input type="text" id="exitSubjects" placeholder="Subjects taught" />
+        </div>
+        <div class="field">
+          <label>6. NAME OF THE INSTITUTION <span class="req">*</span></label>
+          <input type="text" id="exitInstitution" placeholder="Name of school / institution" />
+        </div>
+        <div class="form-grid two-col">
+          <div class="field">
+            <label>7. STATION CODE OF THE INSTITUTION</label>
+            <input type="text" id="exitStationCode" placeholder="Station code" />
+          </div>
+          <div class="field">
+            <label>8. ANY ADMINISTRATIVE POSITION HELD AT THE INSTITUTION</label>
+            <input type="text" id="exitAdminPosition" placeholder="e.g. Deputy Head, HOD, Senior Teacher" />
+          </div>
+        </div>
+        <div class="field">
+          <label>9. DATE STOPPED TEACHING <span class="req">*</span></label>
+          <input type="date" id="exitDateStopped" />
+        </div>
+        <div class="field">
+          <label>10. REASON FOR EXIT / STOPPAGE <span class="req">*</span></label>
+          <select id="exitReason">
+            <option value="">-- Select reason --</option>
+            <option value="Resignation">Resignation</option>
+            <option value="Termination">Termination</option>
+            <option value="Absence">Absence</option>
+            <option value="Desertion">Desertion</option>
+            <option value="Death">Death</option>
+            <option value="Sickness">Sickness</option>
+            <option value="on Transfer">on Transfer</option>
+            <option value="Leave - Study">Leave – Study</option>
+            <option value="Leave - Maternity">Leave – Maternity</option>
+            <option value="Leave - Special">Leave – Special</option>
+            <option value="Other">Other</option>
+          </select>
+          <div class="hint">If “on Transfer” or Leave, specify next institution / type of leave below</div>
+        </div>
+        <div class="field" id="exitReasonDetailsWrap">
+          <label>Additional details (next Institution / type of leave / other)</label>
+          <textarea id="exitReasonDetails" placeholder="e.g. Transferred to XYZ Secondary School, or Study Leave – Masters Programme"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Head of Institution</h2>
+      <div class="form-grid two-col">
+        <div class="field">
+          <label>NAME <span class="req">*</span></label>
+          <input type="text" id="headName" placeholder="Full name of Head / Deputy Head" required />
+        </div>
+        <div class="field">
+          <label>TSC NO.</label>
+          <input type="text" id="headTscNo" placeholder="TSC number" />
+        </div>
+        <div class="field">
+          <label>TEL. NO.</label>
+          <input type="tel" id="headTel" placeholder="e.g. 07XX XXX XXX" />
+        </div>
+      </div>
+
+      <div class="sig-container" style="margin-top:16px;">
+        <label style="font-size:12px;font-weight:600;display:block;margin-bottom:6px;">
+          SIGNATURE <span class="req">*</span>
+        </label>
+        <div class="sig-pad-wrap">
+          <canvas id="signatureCanvas"></canvas>
+        </div>
+        <div class="sig-actions">
+          <button type="button" onclick="clearSignature()">Clear Signature</button>
+          <button type="button" onclick="undoSignature()">Undo</button>
+        </div>
+        <div class="sig-status" id="sigStatus">Draw your signature above</div>
+      </div>
+
+      <div style="margin-top:14px;">
+        <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">OFFICIAL STAMP</label>
+        <div class="stamp-box">Official stamp area (print &amp; stamp physically)</div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-primary" onclick="validateAndPrint()">Print / Save as PDF</button>
+      <button class="btn btn-success" onclick="saveDraft()">Save Draft</button>
+      <button class="btn btn-secondary" onclick="loadDraft()">Load Draft</button>
+      <button class="btn btn-danger" onclick="clearForm()">Clear Form</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // ========== Signature Pad ==========
+    const canvas = document.getElementById('signatureCanvas');
+    const ctx = canvas.getContext('2d');
+    let drawing = false;
+    let lastX = 0, lastY = 0;
+    let strokes = [];
+    let currentStroke = [];
+    let hasSignature = false;
+
+    function resizeCanvas() {
+      const wrap = canvas.parentElement;
+      const ratio = window.devicePixelRatio || 1;
+      const w = wrap.clientWidth;
+      const h = 160;
+      canvas.width = w * ratio;
+      canvas.height = h * ratio;
+      canvas.style.width = w + 'px';
+      canvas.style.height = h + 'px';
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.scale(ratio, ratio);
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.strokeStyle = '#111';
+      ctx.lineWidth = 2.2;
+      redraw();
+    }
+
+    function redraw() {
+      const w = canvas.width / (window.devicePixelRatio || 1);
+      const h = 160;
+      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = '#fff';
+      ctx.fillRect(0, 0, w, h);
+      strokes.forEach(stroke => {
+        if (stroke.length < 2) return;
+        ctx.beginPath();
+        ctx.moveTo(stroke[0].x, stroke[0].y);
+        for (let i = 1; i < stroke.length; i++) {
+          ctx.lineTo(stroke[i].x, stroke[i].y);
+        }
+        ctx.stroke();
+      });
+    }
+
+    function getPos(e) {
+      const rect = canvas.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      return {
+        x: clientX - rect.left,
+        y: clientY - rect.top
+      };
+    }
+
+    function startDraw(e) {
+      e.preventDefault();
+      drawing = true;
+      const pos = getPos(e);
+      lastX = pos.x;
+      lastY = pos.y;
+      currentStroke = [{ x: pos.x, y: pos.y }];
+    }
+
+    function draw(e) {
+      if (!drawing) return;
+      e.preventDefault();
+      const pos = getPos(e);
+      ctx.beginPath();
+      ctx.moveTo(lastX, lastY);
+      ctx.lineTo(pos.x, pos.y);
+      ctx.stroke();
+      currentStroke.push({ x: pos.x, y: pos.y });
+      lastX = pos.x;
+      lastY = pos.y;
+    }
+
+    function endDraw(e) {
+      if (!drawing) return;
+      drawing = false;
+      if (currentStroke.length > 1) {
+        strokes.push(currentStroke);
+        hasSignature = true;
+        updateSigStatus();
+      }
+      currentStroke = [];
+    }
+
+    function clearSignature() {
+      strokes = [];
+      hasSignature = false;
+      redraw();
+      updateSigStatus();
+    }
+
+    function undoSignature() {
+      if (strokes.length) {
+        strokes.pop();
+        hasSignature = strokes.length > 0;
+        redraw();
+        updateSigStatus();
+      }
+    }
+
+    function updateSigStatus() {
+      const el = document.getElementById('sigStatus');
+      if (hasSignature) {
+        el.textContent = '✓ Signature captured';
+        el.classList.add('signed');
+      } else {
+        el.textContent = 'Draw your signature above';
+        el.classList.remove('signed');
+      }
+    }
+
+    function getSignatureDataURL() {
+      if (!hasSignature) return null;
+      return canvas.toDataURL('image/png');
+    }
+
+    canvas.addEventListener('mousedown', startDraw);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseup', endDraw);
+    canvas.addEventListener('mouseleave', endDraw);
+    canvas.addEventListener('touchstart', startDraw, { passive: false });
+    canvas.addEventListener('touchmove', draw, { passive: false });
+    canvas.addEventListener('touchend', endDraw);
+
+    window.addEventListener('resize', resizeCanvas);
+
+    // ========== Mode switching ==========
+    let currentMode = 'entry';
+
+    function setMode(mode) {
+      currentMode = mode;
+      document.getElementById('btnEntry').classList.toggle('active', mode === 'entry');
+      document.getElementById('btnExit').classList.toggle('active', mode === 'exit');
+      document.getElementById('btnBoth').classList.toggle('active', mode === 'both');
+
+      const entry = document.getElementById('entrySection');
+      const exit = document.getElementById('exitSection');
+
+      if (mode === 'entry') {
+        entry.classList.remove('hidden');
+        exit.classList.add('hidden');
+      } else if (mode === 'exit') {
+        entry.classList.add('hidden');
+        exit.classList.remove('hidden');
+      } else {
+        entry.classList.remove('hidden');
+        exit.classList.remove('hidden');
+      }
+    }
+
+    // ========== Helpers ==========
+    function showToast(msg, duration = 2500) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), duration);
+    }
+
+    function getVal(id) {
+      return (document.getElementById(id)?.value || '').trim();
+    }
+
+    function setVal(id, value) {
+      const el = document.getElementById(id);
+      if (el) el.value = value || '';
+    }
+
+    // ========== Validation ==========
+    function validateAndPrint() {
+      const errors = [];
+
+      if (!getVal('reportDate')) errors.push('Report Date is required');
+      if (!getVal('institutionHeader')) errors.push('Name of Institution and Address is required');
+      if (!getVal('headName')) errors.push('Head of Institution name is required');
+      if (!hasSignature) errors.push('Signature is required – please sign in the pad');
+
+      if (currentMode === 'entry' || currentMode === 'both') {
+        if (!getVal('entryName')) errors.push('Entry: Teacher Name is required');
+        if (!getVal('entryTscNo')) errors.push('Entry: TSC No. is required');
+        if (!getVal('entryGrade')) errors.push('Entry: Grade is required');
+        if (!getVal('entryInstitution')) errors.push('Entry: Name of Institution is required');
+        if (!getVal('entryDateStarted')) errors.push('Entry: Date Started Teaching is required');
+        if (!getVal('entryType')) errors.push('Entry: Type of Entry is required');
+      }
+
+      if (currentMode === 'exit' || currentMode === 'both') {
+        if (!getVal('exitName')) errors.push('Exit: Teacher Name is required');
+        if (!getVal('exitTscNo')) errors.push('Exit: TSC No. is required');
+        if (!getVal('exitInstitution')) errors.push('Exit: Name of Institution is required');
+        if (!getVal('exitDateStopped')) errors.push('Exit: Date Stopped Teaching is required');
+        if (!getVal('exitReason')) errors.push('Exit: Reason for Exit/Stoppage is required');
+      }
+
+      if (errors.length) {
+        showToast('Please fix: ' + errors[0], 4000);
+        return;
+      }
+
+      window.print();
+    }
+
+    // ========== Draft (localStorage) ==========
+    function collectData() {
+      return {
+        mode: currentMode,
+        formNo: getVal('formNo') || 'A137414',
+        refNo: getVal('refNo'),
+        reportDate: getVal('reportDate'),
+        institutionHeader: getVal('institutionHeader'),
+        entry: {
+          name: getVal('entryName'),
+          tscNo: getVal('entryTscNo'),
+          grade: getVal('entryGrade'),
+          qual: getVal('entryQual'),
+          subjects: getVal('entrySubjects'),
+          institution: getVal('entryInstitution'),
+          stationCode: getVal('entryStationCode'),
+          dateStarted: getVal('entryDateStarted'),
+          type: getVal('entryType'),
+          transferDetails: getVal('entryTransferDetails')
+        },
+        exit: {
+          name: getVal('exitName'),
+          tscNo: getVal('exitTscNo'),
+          grade: getVal('exitGrade'),
+          qual: getVal('exitQual'),
+          subjects: getVal('exitSubjects'),
+          institution: getVal('exitInstitution'),
+          stationCode: getVal('exitStationCode'),
+          adminPosition: getVal('exitAdminPosition'),
+          dateStopped: getVal('exitDateStopped'),
+          reason: getVal('exitReason'),
+          reasonDetails: getVal('exitReasonDetails')
+        },
+        head: {
+          name: getVal('headName'),
+          tscNo: getVal('headTscNo'),
+          tel: getVal('headTel')
+        },
+        signature: getSignatureDataURL(),
+        strokes: strokes,
+        savedAt: new Date().toISOString()
+      };
+    }
+
+    function applyData(data) {
+      if (!data) return;
+      setMode(data.mode || 'entry');
+      setVal('refNo', data.refNo);
+      setVal('reportDate', data.reportDate);
+      setVal('institutionHeader', data.institutionHeader);
+
+      if (data.entry) {
+        setVal('entryName', data.entry.name);
+        setVal('entryTscNo', data.entry.tscNo);
+        setVal('entryGrade', data.entry.grade);
+        setVal('entryQual', data.entry.qual);
+        setVal('entrySubjects', data.entry.subjects);
+        setVal('entryInstitution', data.entry.institution);
+        setVal('entryStationCode', data.entry.stationCode);
+        setVal('entryDateStarted', data.entry.dateStarted);
+        setVal('entryType', data.entry.type);
+        setVal('entryTransferDetails', data.entry.transferDetails);
+      }
+      if (data.exit) {
+        setVal('exitName', data.exit.name);
+        setVal('exitTscNo', data.exit.tscNo);
+        setVal('exitGrade', data.exit.grade);
+        setVal('exitQual', data.exit.qual);
+        setVal('exitSubjects', data.exit.subjects);
+        setVal('exitInstitution', data.exit.institution);
+        setVal('exitStationCode', data.exit.stationCode);
+        setVal('exitAdminPosition', data.exit.adminPosition);
+        setVal('exitDateStopped', data.exit.dateStopped);
+        setVal('exitReason', data.exit.reason);
+        setVal('exitReasonDetails', data.exit.reasonDetails);
+      }
+      if (data.head) {
+        setVal('headName', data.head.name);
+        setVal('headTscNo', data.head.tscNo);
+        setVal('headTel', data.head.tel);
+      }
+
+      if (data.strokes && data.strokes.length) {
+        strokes = data.strokes;
+        hasSignature = true;
+        resizeCanvas();
+        updateSigStatus();
+      } else if (data.signature) {
+        const img = new Image();
+        img.onload = () => {
+          const w = canvas.width / (window.devicePixelRatio || 1);
+          ctx.drawImage(img, 0, 0, w, 160);
+          hasSignature = true;
+          updateSigStatus();
+        };
+        img.src = data.signature;
+      }
+    }
+
+    function saveDraft() {
+      const data = collectData();
+      localStorage.setItem('tsc_entry_exit_draft', JSON.stringify(data));
+      showToast('Draft saved (including signature)');
+    }
+
+    function loadDraft() {
+      const raw = localStorage.getItem('tsc_entry_exit_draft');
+      if (!raw) {
+        showToast('No saved draft found');
+        return;
+      }
+      try {
+        applyData(JSON.parse(raw));
+        showToast('Draft loaded');
+      } catch (e) {
+        showToast('Failed to load draft');
+      }
+    }
+
+    function clearForm() {
+      if (!confirm('Clear all fields and signature? This cannot be undone.')) return;
+      document.querySelectorAll('input, select, textarea').forEach(el => {
+        if (el.id !== 'formNo') el.value = '';
+      });
+      clearSignature();
+      setMode('entry');
+      showToast('Form cleared');
+    }
+
+    // ========== PWA Install ==========
+    let deferredPrompt = null;
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      document.getElementById('installBanner').classList.add('show');
+    });
+
+    document.getElementById('installBtn').addEventListener('click', async () => {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') {
+        showToast('App installed!');
+      }
+      deferredPrompt = null;
+      document.getElementById('installBanner').classList.remove('show');
+    });
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then(reg => console.log('SW registered', reg.scope))
+          .catch(err => console.log('SW registration failed', err));
+      });
+    }
+
+
+
+    // ========== LIVE SYNC (Firebase Realtime Database) ==========
+    let firebaseApp = null;
+    let db = null;
+    let syncRef = null;
+    let isConnected = false;
+    let isApplyingRemote = false;
+    let syncDebounceTimer = null;
+    let lastLocalSavedAt = "";
+
+    function toggleFirebaseSetup() {
+      const el = document.getElementById("firebaseSetup");
+      el.style.display = el.style.display === "none" ? "block" : "none";
+      // Pre-fill if we already have a saved config
+      const saved = localStorage.getItem("tsc_firebase_config");
+      if (saved && !document.getElementById("firebaseConfigInput").value) {
+        try {
+          document.getElementById("firebaseConfigInput").value = JSON.stringify(JSON.parse(saved), null, 2);
+        } catch (_) {}
+      }
+    }
+
+    function saveFirebaseConfig() {
+      const raw = document.getElementById("firebaseConfigInput").value.trim();
+      const status = document.getElementById("firebaseSetupStatus");
+      if (!raw) {
+        status.textContent = "Please paste your Firebase config JSON.";
+        status.style.color = "#c0392b";
+        return;
+      }
+      let cfg;
+      try {
+        cfg = JSON.parse(raw);
+      } catch (e) {
+        status.textContent = "Invalid JSON. Copy the full config object from Firebase Console.";
+        status.style.color = "#c0392b";
+        return;
+      }
+      if (!cfg.apiKey || !cfg.databaseURL) {
+        status.textContent = "Config must include apiKey and databaseURL.";
+        status.style.color = "#c0392b";
+        return;
+      }
+      localStorage.setItem("tsc_firebase_config", JSON.stringify(cfg));
+      const ok = initFirebase(cfg);
+      if (ok) {
+        status.textContent = "✓ Firebase connected successfully. You can now use Live Sync.";
+        status.style.color = "#1e7e34";
+        showToast("Firebase ready");
+        setTimeout(() => { document.getElementById("firebaseSetup").style.display = "none"; }, 1500);
+      } else {
+        status.textContent = "Failed to initialize Firebase. Check the config and that Realtime Database is enabled.";
+        status.style.color = "#c0392b";
+      }
+    }
+
+    function initFirebase(cfg) {
+      try {
+        if (firebaseApp) {
+          // already initialized
+          return !!db;
+        }
+        firebaseApp = firebase.initializeApp(cfg);
+        db = firebase.database();
+        console.log("Firebase Realtime Database ready");
+        return true;
+      } catch (e) {
+        console.error("Firebase init error", e);
+        // If already initialized with different config, try to reuse
+        try {
+          firebaseApp = firebase.app();
+          db = firebase.database();
+          return true;
+        } catch (e2) {
+          return false;
+        }
+      }
+    }
+
+    function tryAutoInitFirebase() {
+      const saved = localStorage.getItem("tsc_firebase_config");
+      if (saved) {
+        try {
+          const cfg = JSON.parse(saved);
+          return initFirebase(cfg);
+        } catch (_) {}
+      }
+      return false;
+    }
+
+    function generateSyncCode() {
+      const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+      let code = "";
+      for (let i = 0; i < 6; i++) code += chars[Math.floor(Math.random() * chars.length)];
+      document.getElementById("syncCode").value = code;
+      showToast("New code: " + code + " — share with other devices");
+      return code;
+    }
+
+    function setSyncStatus(cls, text) {
+      const el = document.getElementById("syncStatus");
+      if (!el) return;
+      el.className = "sync-status " + (cls || "");
+      el.textContent = text;
+    }
+
+    function connectSync() {
+      if (!db) {
+        const ok = tryAutoInitFirebase();
+        if (!ok) {
+          showToast("Set up Firebase first (click ⚙ Firebase Setup)");
+          toggleFirebaseSetup();
+          return;
+        }
+      }
+
+      let code = (document.getElementById("syncCode").value || "").toUpperCase().replace(/[^A-Z0-9]/g, "");
+      if (!code || code.length < 4) {
+        showToast("Enter a Sync Code (min 4 characters)");
+        return;
+      }
+      document.getElementById("syncCode").value = code;
+      setSyncStatus("syncing", "Connecting…");
+
+      // Disconnect previous listener if any
+      if (syncRef) {
+        syncRef.off();
+        syncRef = null;
+      }
+
+      // Path: forms/{code}
+      syncRef = db.ref("forms/" + code);
+
+      // Listen for remote changes
+      syncRef.on("value", (snapshot) => {
+        const remote = snapshot.val();
+        if (!remote) {
+          // First device — push current form
+          if (!isApplyingRemote) {
+            pushToFirebase();
+          }
+          return;
+        }
+        // Avoid applying our own write
+        if (remote.savedAt && remote.savedAt === lastLocalSavedAt) return;
+        if (isApplyingRemote) return;
+
+        isApplyingRemote = true;
+        applyData(remote);
+        isApplyingRemote = false;
+        setSyncStatus("connected", "Live ✓ " + (remote.savedAt || "").slice(11, 19));
+      }, (err) => {
+        console.error("Firebase listener error", err);
+        setSyncStatus("error", "Permission / connection error");
+        showToast("Firebase error: check Realtime Database rules (test mode)");
+      });
+
+      isConnected = true;
+      document.getElementById("disconnectBtn").style.display = "inline-block";
+      setSyncStatus("connected", "Live: " + code);
+      showToast("Connected — share code " + code);
+      // Push current state so others see it
+      setTimeout(pushToFirebase, 400);
+    }
+
+    function disconnectSync() {
+      if (syncRef) {
+        syncRef.off();
+        syncRef = null;
+      }
+      isConnected = false;
+      setSyncStatus("", "Offline");
+      document.getElementById("disconnectBtn").style.display = "none";
+      showToast("Disconnected");
+    }
+
+    function schedulePush() {
+      if (!isConnected || isApplyingRemote || !db) return;
+      clearTimeout(syncDebounceTimer);
+      syncDebounceTimer = setTimeout(pushToFirebase, 700);
+    }
+
+    function pushToFirebase() {
+      if (!isConnected || isApplyingRemote || !syncRef) return;
+      const data = collectData();
+      lastLocalSavedAt = data.savedAt;
+      // Keep local draft too
+      localStorage.setItem("tsc_entry_exit_draft", JSON.stringify(data));
+
+      setSyncStatus("syncing", "Syncing…");
+      syncRef.set(data)
+        .then(() => {
+          setSyncStatus("connected", "Live ✓");
+        })
+        .catch((err) => {
+          console.error("Push failed", err);
+          setSyncStatus("error", "Write failed");
+          showToast("Could not write to Firebase — check database rules");
+        });
+    }
+
+    function attachLiveSyncListeners() {
+      document.querySelectorAll("input, select, textarea").forEach(el => {
+        el.addEventListener("change", schedulePush);
+        el.addEventListener("input", schedulePush);
+      });
+    }
+
+    // Patch signature handlers so drawing also triggers sync
+    const __origEndDraw = typeof endDraw === "function" ? endDraw : null;
+    if (__origEndDraw) {
+      endDraw = function(e) {
+        __origEndDraw(e);
+        schedulePush();
+      };
+    }
+    const __origClearSig = typeof clearSignature === "function" ? clearSignature : null;
+    if (__origClearSig) {
+      clearSignature = function() {
+        __origClearSig();
+        schedulePush();
+      };
+    }
+
+    // Auto-init Firebase on load if config was saved previously
+    tryAutoInitFirebase();
+
+    // ========== Init ==========
+    document.addEventListener('DOMContentLoaded', () => {
+      resizeCanvas();
+
+      const today = new Date().toISOString().slice(0, 10);
+      document.getElementById('reportDate').value = today;
+
+      document.getElementById('institutionHeader').addEventListener('change', function () {
+        const name = this.value.split(',')[0].trim();
+        if (name && !getVal('entryInstitution')) setVal('entryInstitution', name);
+        if (name && !getVal('exitInstitution')) setVal('exitInstitution', name);
+      });
+
+      // Live sync listeners
+      if (typeof attachLiveSyncListeners === "function") attachLiveSyncListeners();
+    });
+  </script>
+</body>
+</html>
